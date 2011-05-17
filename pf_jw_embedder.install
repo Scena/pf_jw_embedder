@@ -6,7 +6,7 @@
  * Implementation of hook_field_schema().
  */
 function pf_jw_embedder_field_schema($field ) {
-dd($field, 'pf_jw_embedder_field_schema - $field');
+//dd($field, 'pf_jw_embedder_field_schema - $field');
 	$columns = array(
     'title' => array(
       'type' => 'text',
