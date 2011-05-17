@@ -4,5 +4,6 @@ package = Pearson Foundation
 core = 7.x
 
 dependencies[] = remove_field
+dependencies[] = libraries
 
 files[] = pf_jw_embedder.module
