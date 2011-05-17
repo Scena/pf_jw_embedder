@@ -1,0 +1,8 @@
+name = JW Embedder
+description = A video player that allows single videos and playlists in a variety of formats.
+package = Pearson Foundation
+core = 7.x
+
+dependencies[] = remove_field
+
+files[] = pf_jw_embedder.module

@@ -1,0 +1,339 @@
+<?php
+// $Id$
+// $Id$
+
+/**
+ * @file
+ * TODO: Enter file description here.
+ */
+
+
+/**
+ * Implementation of hook_field_info().
+ */
+function pf_jw_embedder_field_info() {
+  return array(
+    'pf_jw_embedder' => array(
+      'label' => t('PF: JW Embedder'),
+      'description' => t('Setup a set of text and media to display in different situations.'),
+      'default_widget' => 'pf_jw_embedder_widget_default',
+      'default_formatter' => 'pf_jw_embedder_formatter_default',
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_field_widget_info().
+ */
+function pf_jw_embedder_field_widget_info() {
+	$settings = array('html5' => TRUE, 'width' => 640, 'height' => 360, 'backcolor' => 'ffffff');
+  return array(
+    'pf_jw_embedder_widget_default' => array(
+      'label' => t('All values.'),
+      'description' => t('All values, title, descr, video URL short title, short descr, video background URL and more.'),
+      'field types' => array('pf_jw_embedder'),
+    	'settings' => $settings,
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+        'default value' => FIELD_BEHAVIOR_NONE,
+      ),
+    ),
+    /*'pf_jw_embedder_widget_brief' => array(
+      'label' => t('Brief.'),
+      'description' => t('Only title, descr and video URL.'),
+      'field types' => array('pf_jw_embedder'),
+    	'settings' => $settings,
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+        'default value' => FIELD_BEHAVIOR_NONE,
+      ),
+    ),*/
+  );
+}
+
+/**
+ * Implementation of hook_field_formatter_info().
+ */
+function pf_jw_embedder_field_formatter_info() {
+  return array(
+    'pf_jw_embedder_formatter_default' => array(
+      'label' => t('Video playlist'),
+      'field types' => array('pf_jw_embedder'),
+    ),
+    'pf_jw_embedder_formatter_slideshow' => array(
+      'label' => t('Video slideshow'),
+      'field types' => array('pf_jw_embedder'),
+    ),
+  );
+}
+
+function pf_jw_embedder_field_widget_settings_form($field, $instance) {
+  $widget = $instance['widget'];
+  $settings = $widget['settings'];
+	$form = array();
+	$form['html5'] = array(
+		'#type' => 'checkbox', 
+		'#title' => t('Use HTML5 video (better performance, ipad)'), 
+		'#default_value' => $settings['html5'],
+  );
+	$form['backcolor'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Background color'), 
+		'#description' => t('Enter the six characteer hex code without the hash (#) symbol.'), 
+		'#default_value' => $settings['backcolor'],
+  );
+	$form['width'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Video width'), 
+		'#default_value' => $settings['width'],
+  );
+	$form['height'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Video height'), 
+		'#default_value' => $settings['height'],
+  );
+  return $form;
+}
+
+/**
+ * Implementation of hook_field_widget_form().
+ */
+function pf_jw_embedder_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+	
+	$widget_type = $instance['widget']['type'];
+  
+  $element['remove'] = get_remove_field_button_array('pf_jw_embedder_field_widget_form_remove', 'pf_jw_embedder_remove', $delta);
+
+  $element['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#default_value' => !empty($items[$delta]['title']) ? $items[$delta]['title'] : NULL,
+    '#required' => FALSE,
+    '#size' => 100,
+    '#weight' => 10,
+  );
+  $element['media_video_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Video URL'),
+    '#description' => t('Enter the URL the an focus video.'),
+    '#required' => FALSE,
+    '#default_value' => !empty($items[$delta]['media_video_path']) ? $items[$delta]['media_video_path'] : NULL,
+    '#size' => 100,
+    '#weight' => 20,
+  );
+  $element['description'] = array(
+    '#title' => t('Description'),
+    '#required' => FALSE,
+    '#default_value' => !empty($items[$delta]['description']) ? $items[$delta]['description'] : NULL,
+    '#weight' => 30,
+    '#rows' => 2,
+	  '#type' => 'textarea',
+	  // There is a bug somewhere that won't allow submitting the description with an array for the value and format. Tried removing/resetting in the validator...
+	  //'#type' => 'text_format',
+	  //'#base_type' => 'textarea',
+  );
+  $element['media_image_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Poster image URL'),
+    '#description' => t('Enter the URL of a focus image.'),
+    '#default_value' => !empty($items[$delta]['media_image_path']) ? $items[$delta]['media_image_path'] : NULL,
+    '#size' => 100,
+    '#weight' => 40,
+  );
+  $element['media_thumbnail_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Thumbnail URL'),
+    '#description' => t('Enter the URL of video thumbnail for playlists.'),
+    '#default_value' => !empty($items[$delta]['media_image_path']) ? $items[$delta]['media_image_path'] : NULL,
+    '#size' => 100,
+    '#weight' => 50,
+  );
+  /*
+	$element['more'] = array(
+		'#type' => 'fieldset',
+		'#title' => 'More detail',
+		'#collapsible' => TRUE,
+		'#collapsed' => TRUE,
+    '#weight' => 59,
+	);
+	 */
+	//if ($instance['widget']['type'] == 'pf_jw_embedder_widget_default') {
+	  $element['short_title'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Short title'),
+	    '#default_value' => !empty($items[$delta]['short_title']) ? $items[$delta]['short_title'] : NULL,
+	    '#description' => t('If left blank, the Callout title will be used.'),
+	    '#weight' => 60,
+    	'#size' => 100,
+	    '#required' => FALSE,
+	  );
+	  $element['short_description'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Short description'),
+	    '#description' => t('If left blank, it will be blank.'),
+	    '#default_value' => !empty($items[$delta]['short_description']) ? $items[$delta]['short_description'] : NULL,
+	    '#weight' => 70,
+    	'#size' => 100,
+	    '#required' => FALSE,
+	  );
+	  $element['media_video_bg_path'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Video background image URL'),
+	    '#description' => t('Enter the URL of the focus video background image.'),
+	    '#required' => FALSE,
+	    '#default_value' => !empty($items[$delta]['media_video_bg_path']) ? $items[$delta]['media_video_bg_path'] : NULL,
+    	'#size' => 100,
+	    '#weight' => 80,
+	  );
+	  $element['more_link_path'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Learn more link URL'),
+	    '#required' => FALSE,
+	    '#description' => t('If this is not a sinlge item or the first item in a video article, you can optionally provide a link to learn more.'),
+	    '#default_value' => !empty($items[$delta]['more_link_path']) ? $items[$delta]['more_link_path'] : NULL,
+	    '#weight' => 90,
+	    '#size' => 100,
+	  );
+	  $element['extended_video_path'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Extended video URL'),
+	    '#required' => FALSE,
+	    '#description' => t('If there is a longer, full length versionof the video, enter that URL here.'),
+	    '#default_value' => !empty($items[$delta]['extended_video_path']) ? $items[$delta]['extended_video_path'] : NULL,
+	    '#weight' => 90,
+	    '#size' => 100,
+	  );
+	  $element['credit'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Media credit'),
+	    '#required' => FALSE,
+	    '#description' => t('Credits for media. This can be associated with different media in the appropriate tpl.php.'),
+	    '#default_value' => !empty($items[$delta]['more_link_path']) ? $items[$delta]['more_link_path'] : NULL,
+	    '#weight' => 100,
+	    '#size' => 100,
+	  );
+  //}
+  	
+  return $element;
+}
+
+
+function pf_jw_embedder_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+	$field_name = $field['field_name'];
+	foreach($items as $index => $item) {
+		if (empty($item['title']) && empty($item['media_video_path'])) {
+			unset($items[$index]);
+			unset($entity->{$field_name}[$langcode][$index]);
+		}/*
+		foreach($item['more'] as $key => $value) {
+			$items[$index][$key] = $value;
+			$entity->{$field_name}[$langcode][$index][$key] = $value;
+		}*/
+		//unset($item['more']);
+	}
+	
+//dpm($entity, '$entity');
+//dpm($items, '$items');
+	/*foreach($entity->{$field_name}[$langcode] as $index => $item) {
+    if (is_array($item['description']['format'])) {
+      //unset($item['description']['format']);
+      $item['description'] = $item['description']['value'];
+      $items[$index]['description'] = $item['description']['value'];
+    }
+	}*/
+}
+
+/**
+ * Implementation of hook_field_is_empty().
+ * */
+function pf_jw_embedder_field_is_empty($item, $field ) {
+  if ($field['type'] == 'pf_jw_embedder') {
+    if (empty($item['title']) || empty($item['media_video_path'])) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+function pf_jw_embedder_field_widget_form_remove($form, $form_state) {
+  return remove_field_ajax_handler($form, $form_state, 'field_pf_jw_embedder');
+}
+
+/**
+ * Implementation of hook_field_formatter_view().
+*/
+function pf_jw_embedder_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+//dpm($entity, '$entity');
+	if ($field['type'] == 'pf_jw_embedder') {
+		foreach($items as $index => $item) {
+			$items[$index]['index'] = $index;
+		}
+	  $html5 = empty($instance['widget']['settings']['html5']) ? FALSE : $instance['widget']['settings']['html5'];
+	  $backcolor = $instance['widget']['settings']['backcolor'];
+	  $settings = array(
+  			'items' => $items, 
+  			'html5' => $html5,
+  			'backcolor' => $backcolor,
+  			'backcolor_rgb' => hex2RGB('#' . $backcolor, TRUE),
+  			'width' => $instance['widget']['settings']['width'],
+  			'height' => $instance['widget']['settings']['height'],
+  		);
+	  switch($display['type']) {
+	  	case 'pf_jw_embedder_formatter_default':
+	  		$element[]['#markup'] = theme('video_playlist', $settings);
+	  		break;
+	  	case 'pf_jw_embedder_formatter_slideshow':
+	  		$element[]['#markup'] = theme('video_callout', $settings);
+	  		break;
+	  }
+	  return $element;
+	}
+}
+
+/**
+ *  Implements hook_theme().
+ */
+function pf_jw_embedder_theme($existing, $type, $theme, $path) {
+  $mod_path = drupal_get_path('module', 'pf_jw_embedder') . '/templates';
+  
+	$settings = array('items' => NULL, 'html5' => TRUE, 'width' => 600, 'height' => 340, 'backcolor' => 'ffffff');
+  $templates['video_playlist'] = array(
+    'variables' => $settings,
+    'template' => 'video-playlist',
+    'path' => $mod_path,
+  );
+  $templates['video_callout'] = array(
+    'variables' => $settings,
+    'template' => 'video-callout',
+    'path' => $mod_path,
+  );
+  $templates += drupal_find_theme_templates($templates, '.tpl.php', path_to_theme() . '/templates');
+  return $templates;
+}
+
+/**
+ * http://php.net/manual/en/function.hexdec.php
+ * Convert a hexa decimal color code to its RGB equivalent
+ *
+ * @param string $hexStr (hexadecimal color value)
+ * @param boolean $returnAsString (if set true, returns the value separated by the separator character. Otherwise returns associative array)
+ * @param string $seperator (to separate RGB values. Applicable only if second parameter is true.)
+ * @return array or string (depending on second parameter. Returns False if invalid hex color value)
+ */                                                                                                 
+function hex2RGB($hexStr, $returnAsString = false, $seperator = ',') {
+    $hexStr = preg_replace("/[^0-9A-Fa-f]/", '', $hexStr); // Gets a proper hex string
+    $rgbArray = array();
+    if (strlen($hexStr) == 6) { //If a proper hex code, convert using bitwise operation. No overhead... faster
+        $colorVal = hexdec($hexStr);
+        $rgbArray['red'] = 0xFF & ($colorVal >> 0x10);
+        $rgbArray['green'] = 0xFF & ($colorVal >> 0x8);
+        $rgbArray['blue'] = 0xFF & $colorVal;
+    } elseif (strlen($hexStr) == 3) { //if shorthand notation, need some string manipulations
+        $rgbArray['red'] = hexdec(str_repeat(substr($hexStr, 0, 1), 2));
+        $rgbArray['green'] = hexdec(str_repeat(substr($hexStr, 1, 1), 2));
+        $rgbArray['blue'] = hexdec(str_repeat(substr($hexStr, 2, 1), 2));
+    } else {
+        return false; //Invalid hex color code
+    }
+    return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
+}

@@ -1,0 +1,72 @@
+<?php 
+
+
+
+/**
+ * Implementation of hook_field_schema().
+ */
+function pf_jw_embedder_field_schema($field ) {
+dd($field, 'pf_jw_embedder_field_schema - $field');
+	$columns = array(
+    'title' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'media_video_path' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'description' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'media_image_path' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'video_thumbnail_path' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'short_title' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'short_description' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'media_video_bg_path' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'extended_video_path' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'more_link_path' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    'credit' => array(
+      'type' => 'text',
+      'not null' => FALSE,
+      'size' => 'tiny',
+    ),
+    
+  );
+  return array(
+    'columns' => $columns,
+  );
+}
+

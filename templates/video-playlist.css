@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+#jw-embedder-playlist-player {
+	height:360px;
+	position:relative;
+	overflow:hidden;
+}
+#jw-embedder-playlist-player>div {
+	position:absolute;
+	top:0;
+	left:0;
+}
+#jw-embedder-playlist-player object {
+	background:transparent !important;
+}
+#jw-embedder-playlist-list {
+	
+}
+#jw-embedder-playlist-list>ul {
+	list-style:none;
+}
+#jw-embedder-playlist-list>ul>li.jw-embedder-playlist-item {
+	border-bottom:1px solid #666;
+	padding:20px 0;
+	background:none;
+	float:left;
+	width:48%;
+	padding: 5px;
+}
+#jw-embedder-playlist-list>ul>li.jw-embedder-playlist-item.selected {
+	background:#ccc;
+}
+#jw-embedder-playlist-list>ul>li>a {
+	text-decoration:none;
+}
+#jw-embedder-playlist-list>ul>li>a>span.title {
+	display:block;
+	font-size:1.1em;
+	font-weight:bold;
+}
+#jw-embedder-playlist-list>ul>li>a>span.description {
+	display:block;
+}

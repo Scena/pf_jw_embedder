@@ -1,0 +1,321 @@
+/*
+.tabbed-video-callout {
+    margin:0 0 15px 0;
+}
+*/
+.tabbed-video-callout {
+    background-color:#fff;
+    /*width:630px;*/
+    margin:0 0 0 0;
+}
+/*
+#interactive-box {
+    padding:15px 15px 0 15px;
+}*/
+
+.tabbed-video-callout>#interactive-box .info {
+    height:309px;
+    margin:0px;
+    padding:0px;
+    position:relative;
+}
+
+
+.tabbed-video-callout>#interactive-box .video-callout-screen {
+    height: 310px;
+    width:600px;
+}
+.tabbed-video-callout>#interactive-box .video-wrapper {
+    position:relative;
+    margin:15px 60px 0 70px;
+}
+
+.tabbed-video-callout>#interactive-box .video-description,
+.tabbed-video-callout>#interactive-box .video-player {
+    position:absolute;
+    top:0px;
+    float:right;
+    width:600px;
+    height: 310px;
+    min-height: 310px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.tabbed-video-callout>#interactive-box .video-description-inner {
+    background: transparent url(i/bg-description.png);
+    width:320px;
+    padding:0 0 20px 0;
+    margin: 15px 0 0 15px;
+    float:left;
+}
+
+.tabbed-video-callout>#interactive-box .video-description h2 {
+    font-family:Georgia, serif, sans-serif;
+    font-size:36px;
+    line-height:1em;
+    font-weight:bold;
+    color:#ffffff;
+    padding:16px 10px 12px 18px;
+    margin:0 0 0 0;
+    text-transform: none;
+}
+
+.tabbed-video-callout>#interactive-box .video-description p {
+    font-family:Verdana, serif, sans-serif;
+    font-size:12px;
+    font-weight:normal;
+    color:#ffffff;
+    padding:0 10px 11px 18px;
+    margin:0 0 0 0;
+    border:none;
+    text-transform: none;
+}
+
+.tabbed-video-callout>#interactive-box .watch-video {
+    float:left;
+    margin:11px 30px 0 18px;
+    padding:0 0 0 0;
+}
+
+.tabbed-video-callout>#interactive-box .watch-video a:link, 
+.tabbed-video-callout>#interactive-box .watch-video a:visited, 
+.tabbed-video-callout>#interactive-box .watch-video a:active, 
+.tabbed-video-callout>#interactive-box .watch-video a:link
+{
+    background:url(i/btn-watch-video.png) top left no-repeat;
+    width:124px;
+    height:34px;
+    display:block;
+    text-decoration:none;
+}
+
+.tabbed-video-callout>#interactive-box .learn-more {
+    float:left;
+    margin:11px 0 0 0;
+    padding:0 0 0 0;
+}
+
+.tabbed-video-callout>#interactive-box .learn-more a:link, 
+.tabbed-video-callout>#interactive-box .learn-more a:visited, 
+.tabbed-video-callout>#interactive-box .learn-more a:active, 
+.tabbed-video-callout>#interactive-box .learn-more a:link
+{
+    background:url(i/btn-learn-more.png) top left no-repeat;
+    width:104px;
+    height:34px;
+    display:block;
+    text-decoration:none;
+}
+
+.tabbed-video-callout>#interactive-box .watch-video span, 
+.tabbed-video-callout>#interactive-box .learn-more span
+{
+    visibility:hidden;
+}
+
+.tabbed-video-callout>#interactive-box.film-image {
+    padding:0 0 0 0;
+    margin:0 0 0 0;
+    height:auto;
+}
+
+.tabbed-video-callout>#interactive-box.film-image p {
+    padding:0 0 0 0;
+    margin:0 0 0 0;
+}
+
+/* tab controls */
+
+.tabbed-video-callout>.video-callout-controls {
+    /*width:600px;*/
+    /*margin:0 0 0 15px;*/
+    font-family:Arial, Helvetica, sans-serif, serif;
+    color:#333333;
+    font-size:12px;
+    z-index: 1;
+    width:100%;
+    background: #cbcfbe;
+    behavior: url(border-radius.htc);
+    -moz-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -khtml-border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -khtml-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.tabbed-video-callout>.video-callout-controls .video-callout-tab {
+    float:left;
+    height:46px;
+    border-right:1px solid white;
+}
+
+.tabbed-video-callout>.video-callout-controls .video-callout-tab.selected,
+.tabbed-video-callout>.video-callout-controls .video-callout-tab:hover {
+ 	background: #ffcc33;
+}
+.tabbed-video-callout>.video-callout-controls .video-callout-tab.first.selected,
+.tabbed-video-callout>.video-callout-controls .video-callout-tab.first:hover {
+    -moz-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -khtml-border-bottom-left-radius: 10px;
+    behavior: url(border-radius.htc);
+    border-bottom-left-radius: 10px;
+}
+
+.tabbed-video-callout>.video-callout-controls .video-callout-tab.last.selected,
+.tabbed-video-callout>.video-callout-controls .video-callout-tab.last:hover {
+    behavior: url(border-radius.htc);
+    -moz-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -khtml-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.tabbed-video-callout>.video-callout-controls .video-callout-tab.last {
+	border:none;
+}
+.tabbed-video-callout>.video-callout-controls.tabs-2 .video-callout-tab {
+	width:49.9%;
+}/*
+.tabbed-video-callout>.video-callout-controls.tabs-2 .video-callout-tab.last {
+	width:49.99%;
+}*/
+.tabbed-video-callout>.video-callout-controls.tabs-3 .video-callout-tab {
+	width:33.2%;
+}
+.tabbed-video-callout>.video-callout-controls.tabs-3 .video-callout-tab.last {
+	width:33.3%;
+}
+.tabbed-video-callout>.video-callout-controls.tabs-4 .video-callout-tab {
+	width:24.8%;
+}
+.tabbed-video-callout>.video-callout-controls.tabs-4 .video-callout-tab.last {
+	width:25%;
+}
+
+.tabbed-video-callout>.video-callout-controls .video-callout-tab a:link,  
+.tabbed-video-callout>.video-callout-controls .video-callout-tab a:visited, 
+.tabbed-video-callout>.video-callout-controls .video-callout-tab a:active,  
+.tabbed-video-callout>.video-callout-controls .video-callout-tab a:hover 
+{
+    display:block;
+    text-decoration:none;
+    padding:6px 8px 0 8px;
+    height:40px;
+    color:#333333;
+}
+ 
+.tabbed-video-callout>.video-callout-controls .video-callout-tab a:hover {
+    color:#333333;
+}
+
+.tabbed-video-callout>.video-callout-controls .video-callout-tab span.h3 {
+    font-weight:bold;
+    display:block;
+}
+
+.tabbed-video-callout>#interactive-box .embed-wrapper {
+    /*width:17px;*/
+    position:absolute;
+    bottom:3px;
+    float:right;
+    right:0;
+}
+
+.tabbed-video-callout>#interactive-box .video-player {
+    padding:0 0 0 0;
+}
+
+.tabbed-video-callout>#interactive-box .video-player object {
+    border: 1px solid #000;
+    background: transparent;
+    float:right;
+    margin:0;
+}
+
+.tabbed-video-callout>#interactive-box .video-player object object {
+    border: none;
+}
+
+.tabbed-video-callout>#interactive-box .embed-code-bt {
+    margin:0 0 0 1px;
+    width:17px;
+}
+
+.tabbed-video-callout>#interactive-box .embed-bt {
+    /*width:17px;*/
+    height:79px;
+    background:url(i/bg-embed.jpg) top left no-repeat;
+    display:block;
+    text-decoration:none;
+    /*font-size:1px;*/
+}
+
+.tabbed-video-callout>#interactive-box .embed-bt span {
+    visibility:hidden;
+}
+
+.tabbed-video-callout>#interactive-box .embedcode {
+    width:390px;
+    border:1px solid #000;
+    background-color:#fff;
+}
+.tabbed-video-callout>#interactive-box .close-embed-bt {
+    background:url(i/btn-close.jpg) top left no-repeat;
+    /*width:10px;
+    height:10px;*/
+    float:right;
+    display:block;
+    text-decoration:none;
+    /*margin:2px 2px;
+    font-size:8px;*/
+}
+
+.tabbed-video-callout>#interactive-box .close-embed-bt span {
+    visibility:hidden;
+}
+
+.tabbed-video-callout>#interactive-box .embedcode textarea {
+    width:360px;
+    font-size:0.8em;
+    font-family:Verdana, Geneva, sans-serif, serif;
+    min-height:100px;
+    float:left;
+    border:1px solid #000;
+    margin:2px 2px;
+    padding:5px;
+}
+
+.tabbed-video-callout>#interactive-box .close-video {
+    background:url(i/btn-close-videoplayer.gif) top right no-repeat;
+    text-decoration:none;
+    /*font-size:5px;
+    width:18px;
+    height:18px;*/
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.tabbed-video-callout>#interactive-box .close-video a:link, 
+.tabbed-video-callout>#interactive-box .close-video a:visited, 
+.tabbed-video-callout>#interactive-box .close-video a:active, 
+.tabbed-video-callout>#interactive-box .close-video a:hover 
+{
+    text-decoration:none;
+    /*width:18px;
+    height:18px;*/
+    outline:hidden;
+    display:block;
+}
+
+.tabbed-video-callout>#interactive-box .close-video span {
+    visibility:hidden;
+}
+
+
