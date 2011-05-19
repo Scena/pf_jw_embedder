@@ -156,7 +156,7 @@ jQuery(document).ready(function($) {
 				$(this).css({height:0, width:0});
 				self.parent().addClass('selected');
 				var CURRENT_PLAYER_ID = self.attr('href');
-				set_jw_player(CURRENT_PLAYER_ID);
+				set_playlist_jw_player(CURRENT_PLAYER_ID);
 			});
 		return false;
 	});
