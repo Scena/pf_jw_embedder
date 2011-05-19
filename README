@@ -6,10 +6,14 @@ Requires:
 
 JW Embedder Media Player
 
-You will need to download the JW Player (http://www.longtailvideo.com/players/jw-flv-player), unzip in your $DRUPAL_ROOT/sites/all/libraries so that it is $DRUPAL_ROOT/sites/all/libraries/mediaplayer
+You will need to download the JW Player (http://www.longtailvideo.com/players/jw-flv-player), 
+unzip in your $DRUPAL_ROOT/sites/all/libraries so that it is $DRUPAL_ROOT/sites/all/libraries/mediaplayer
 
 -- Skins
-currently only the glow skin is supported (because it is hard coded). This will eventually be a settings option, but for now foolwo these instructions:
+currently only the glow skin is supported (because it is hard coded). This will eventually 
+be a settings option, but for now foolwo these instructions:
 
-* download the glow skin (http://www.longtailvideo.com/addons/skins/196/Glow?q=%20alt=) and place the zip in the libraries/mediaplayer/ folder
-* unzip the glow.zip so it also exists in the mediaplayer folder as a folder. This is necessary for HTML5.
+* download the glow skin (http://www.longtailvideo.com/addons/skins/196/Glow?q=%20alt=) and place 
+the zip in the libraries/mediaplayer/ folder
+* unzip the glow.zip so it also exists in the mediaplayer folder as a folder. This is 
+necessary for HTML5.
