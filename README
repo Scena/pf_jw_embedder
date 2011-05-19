@@ -1,8 +1,8 @@
-PF: JW Embedder
+PF: JW Embedder for Drupal 7
 
 Requires:
-* libraries
-* Remove Field
+* libraries - http://drupal.org/project/libraries
+* remove_field- https://github.com/Pearson-Foundation/remove_field
 
 JW Embedder Media Player
 
