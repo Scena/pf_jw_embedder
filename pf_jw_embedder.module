@@ -26,7 +26,20 @@ function pf_jw_embedder_field_info() {
  * Implementation of hook_field_widget_info().
  */
 function pf_jw_embedder_field_widget_info() {
-	$settings = array('html5' => TRUE, 'width' => 640, 'height' => 360, 'backcolor' => 'ffffff');
+	$settings = array(
+		'html5' => TRUE, 
+		'width' => 640, 
+		'height' => 447, 
+		'backcolor' => 'ffffff',
+		'screencolor' => 'ffffff',
+		'frontcolor' => '000000',
+		'lightcolor' => '000000',
+		'skin_url' => NULL,
+		'controlbar.position' => 'over',
+		'controlbar.idlehide' => TRUE,
+		'display.showmute' => TRUE,
+		'autostart' => FALSE,
+	);
   return array(
     'pf_jw_embedder_widget_default' => array(
       'label' => t('All values.'),
@@ -76,22 +89,91 @@ function pf_jw_embedder_field_widget_settings_form($field, $instance) {
 		'#title' => t('Use HTML5 video (better performance, ipad)'), 
 		'#default_value' => $settings['html5'],
   );
-	$form['backcolor'] = array(
-		'#type' => 'textfield', 
-		'#title' => t('Background color'), 
-		'#description' => t('Enter the six characteer hex code without the hash (#) symbol.'), 
-		'#default_value' => $settings['backcolor'],
-  );
 	$form['width'] = array(
 		'#type' => 'textfield', 
 		'#title' => t('Video width'), 
 		'#default_value' => $settings['width'],
+		'#description' => 'Set the width to the width you have available. See height field 
+		description for how to calculate height.',
   );
 	$form['height'] = array(
 		'#type' => 'textfield', 
 		'#title' => t('Video height'), 
 		'#default_value' => $settings['height'],
+		'#description' => 'To determine the height for display, use the following: 
+		orginal_height / original_width * new_width = new_height
+		<p><strong>Note: if you want the controls outside of the video, that height needs to be 
+		included in the original_height for the above equation.</strong></p>',
   );
+	$form['skin_url'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Skin <strong>FOLDER</strong> URL'), 
+		'#description' => t('If left blank, the default glow skin will be used. 
+		<strong>IMPORTANT: For HTML5 playback, the skin needs to unzipped and the file structure should be the same as
+		in <a href="http://www.longtailvideo.com/support/jw-player/jw-player-for-flash-v5/15995/jw-embedder-reference-guide#skins">
+		this reference page</a>.</strong>'), 
+		'#default_value' => empty($settings['skin_url']) ? '' : $settings['skin_url'],
+  );
+  
+	$form['backcolor'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Background color'), 
+		'#description' => t('Enter the six characteer hex code without the hash (#) symbol. 
+		This will be used for the backcolor jwplayer property.'), 
+		'#default_value' => $settings['backcolor'],
+  );
+	$form['screencolor'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Screen color'), 
+		'#description' => t('Enter the six characteer hex code without the hash (#) symbol. 
+		This will be used for the bscreencolor jwplayer property.'), 
+		'#default_value' => $settings['screencolor'],
+  );
+	$form['frontcolor'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Front color'), 
+		'#description' => t('Enter the six characteer hex code without the hash (#) symbol. 
+		This will be used for the frontcolor jwplayer property.'), 
+		'#default_value' => $settings['frontcolor'],
+  );
+	$form['lightcolor'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Light color'), 
+		'#description' => t('Enter the six characteer hex code without the hash (#) symbol. 
+		This will be used for the lightcolor jwplayer property.'), 
+		'#default_value' => $settings['lightcolor'],
+  );
+  
+  
+	$form['controlbar.position'] = array(
+		'#type' => 'select', 
+		'#title' => t('Controlbar position'), 
+		'#default_value' => $settings['controlbar.position'],
+		'#options' => array(
+			'over' => t('Over'),
+			'bottom' => t('Bottom'),
+			'top' => t('Top'),
+			'none' => t('None'),
+		),
+  );
+  
+  
+	$form['controlbar.idlehide'] = array(
+		'#type' => 'checkbox', 
+		'#title' => t('Hide controls on idle'), 
+		'#default_value' => $settings['controlbar.idlehide'],
+  );
+	$form['display.showmute'] = array(
+		'#type' => 'checkbox', 
+		'#title' => t('Show mute button'), 
+		'#default_value' => $settings['display.showmute'],
+  );
+	$form['autostart'] = array(
+		'#type' => 'checkbox', 
+		'#title' => t('Autostart'), 
+		'#default_value' => $settings['autostart'],
+  );
+  
   return $form;
 }
 
@@ -270,13 +352,32 @@ function pf_jw_embedder_field_formatter_view($entity_type, $entity, $field, $ins
 		}
 	  $html5 = empty($instance['widget']['settings']['html5']) ? FALSE : $instance['widget']['settings']['html5'];
 	  $backcolor = $instance['widget']['settings']['backcolor'];
+	  $screencolor = $instance['widget']['settings']['screencolor'];
+	  $frontcolor = $instance['widget']['settings']['frontcolor'];
+	  $lightcolor = $instance['widget']['settings']['lightcolor'];
+	  /*
+	$settings = array(
+		'controlbar.position' => 'over',
+		'controlbar.idlehide' => TRUE,
+		'display.showmute' => TRUE,
+		'autostart' => FALSE,
+	);*/
 	  $settings = array(
   			'items' => $items, 
   			'html5' => $html5,
-  			'backcolor' => $backcolor,
-  			'backcolor_rgb' => hex2RGB('#' . $backcolor, TRUE),
   			'width' => $instance['widget']['settings']['width'],
   			'height' => $instance['widget']['settings']['height'],
+	  
+  			'backcolor' => $backcolor,
+  			'backcolor_rgb' => hex2RGB('#' . $backcolor, TRUE),
+  			'screencolor' => screencolor,
+  			'screencolor_rgb' => hex2RGB('#' . $screencolor, TRUE),
+  			'frontcolor' => $frontcolor,
+  			'frontcolor_rgb' => hex2RGB('#' . $frontcolor, TRUE),
+  			'lightcolor' => $lightcolor,
+  			'lightcolor_rgb' => hex2RGB('#' . $lightcolor, TRUE),
+	  
+  			'skin_url' => $instance['widget']['settings']['skin_url'],
   		);
 	  switch($display['type']) {
 	  	case 'pf_jw_embedder_formatter_default':

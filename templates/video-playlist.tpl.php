@@ -17,8 +17,14 @@ if ($items_count > 0) {
 	$mod_path = drupal_get_path('module', 'pf_jw_embedder');
 	
 	$player = $js_lib_path . '/player.swf';
-	$skin_flash = $js_lib_path . '/glow/glow.zip';
-	$skin_html5 = $js_lib_path . '/glow/glow.xml';
+	if ($skin_url):
+		$skin_name = basename($skin_url);
+		$skin_flash = $skin_url . '/' . $skin_name . '.zip';
+		$skin_html5 = $skin_url . '/' . $skin_name . '.xml';
+	else:
+		$skin_flash = $js_lib_path . '/glow/glow.zip';
+		$skin_html5 = $js_lib_path . '/glow/glow.xml';
+	endif;
 		
 	drupal_add_js($js_lib_path . '/jwplayer.js');
 	drupal_add_css($mod_path . '/templates/video-playlist.css');
@@ -97,11 +103,14 @@ jQuery(document).ready(function($) {
 		.animate({
 		    opacity: 100,
 		  }, 1000);
+
 		jwplayer(vid_id).setup({
 			  flashplayer: '<?php print $player; ?>'
     		,skin: '<?php print $skin_flash; ?>'
 			  ,backcolor:'<?php print $backcolor; ?>'
-				,screencolor: '<?php print $backcolor; ?>'
+				,screencolor: '<?php print $screencolor; ?>'
+				,frontcolor: '<?php print $frontcolor; ?>'
+				,lightcolor: '<?php print $lightcolor; ?>'
 			  /*,modes: [
 			  		{ type: "html5", skin: '<?php print $skin_html5; ?>' }
 			  		,{ type: "flash", src: "<?php print $player; ?>", skin: '<?php print $skin_flash; ?>' }
