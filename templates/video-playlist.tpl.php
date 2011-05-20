@@ -129,14 +129,15 @@ jQuery(document).ready(function($) {
 		    opacity: 100,
 		  }, 1000);
 		jwplayer(vid_id).setup({
-			  //flashplayer: '<?php print $player; ?>'
-    		//,skin: '<?php print $skin_flash; ?>'
-			  backcolor:'<?php print $backcolor; ?>'
-			  ,modes: [
-				  	{ type: "flash", src: "<?php print $player; ?>", skin: '<?php print $skin_flash; ?>' }
-			  		,{ type: "html5", skin: '<?php print $skin_html5; ?>' }
+			  flashplayer: '<?php print $player; ?>'
+    		,skin: '<?php print $skin_flash; ?>'
+			  ,backcolor:'<?php print $backcolor; ?>'
+				,screencolor: '<?php print $backcolor; ?>'
+			  /*,modes: [
+			  		{ type: "html5", skin: '<?php print $skin_html5; ?>' }
+			  		,{ type: "flash", src: "<?php print $player; ?>", skin: '<?php print $skin_flash; ?>' }
 			      ,{ type: "download" }
-			    ]
+			    ]*/
 			});
 		$('#jw-embedder-playlist-player>div, #jw-embedder-playlist-player object').css('background-color', 'rgb(<?php print $backcolor_rgb; ?>)');
 		$('#jw-embedder-playlist-player object').attr('bgcolor', '#<?php print $backcolor; ?>');
