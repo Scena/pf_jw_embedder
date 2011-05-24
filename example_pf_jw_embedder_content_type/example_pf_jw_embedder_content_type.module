@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Example PF JW Embedder content type feature.
- */
-
-include_once('example_pf_jw_embedder_content_type.features.inc');

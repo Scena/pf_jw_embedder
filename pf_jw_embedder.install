@@ -21,7 +21,7 @@ function pf_jw_embedder_field_schema($field ) {
     'description' => array(
       'type' => 'text',
       'not null' => FALSE,
-      'size' => 'tiny',
+      'size' => 'normal',
     ),
     'media_image_path' => array(
       'type' => 'text',

@@ -11,43 +11,30 @@
  * @see theme_field()
  */
 
+function pf_jw_embedder_callout_media_ident($url, $prefix, $suffix) {
+	dpm(pathinfo($url, PATHINFO_EXTENSION), 'pathinfo($url, PATHINFO_EXTENSION)');
+	return $prefix . basename($url, '.' . pathinfo($url, PATHINFO_EXTENSION)) . $suffix;
+}
+
 $items_count = count($items);
 if ($items_count > 0) {
 			
-	$js_lib_path = url(libraries_get_path('mediaplayer'), array('absolute' => TRUE));
 	$mod_path = drupal_get_path('module', 'pf_jw_embedder');
-	
-	$player = $js_lib_path . '/player.swf';
-	$skin_flash = $js_lib_path . '/glow/glow.zip';
-	$skin_html5 = $js_lib_path . '/glow/glow.xml';
-		
-	drupal_add_js($js_lib_path . '/jwplayer.js');
 	drupal_add_css($mod_path . '/templates/video-callout.css');
 	drupal_add_js($mod_path . '/templates/video-callout.js');
 		
 	$first_item = $items[0];
-
 ?>
 
 <div class="tabbed-video-callout clearfix <?php print $classes; ?>">
-
   <div id="interactive-box">
     <div class="info">
-	
-		<?php foreach ($items as $index => $item) { 
-			$display = 'none';
-			if ($index == 0):
-		  	$display = 'block';
-			endif;
-	    
-			$media_ident = 'pf-video-callout-' . basename($item['media_video_path'], '.mp4') . $item['index'];
-
+		<?php foreach ($items as $index => $item) {
+			$media_ident = pf_jw_embedder_callout_media_ident($item['media_video_path'], 'pf-video-callout-', $item['index']);
 	  ?>
-
       <div id="<?php print $media_ident; ?>-screen" 
       	class="video-callout-screen" 
-      	style="display:<?php print $display; ?>">
-      	
+      	style="display:<?php print $item['display']; ?>">
         <div class="video-description" style="background:transparent url('<?php print $item['media_image_path']; ?>') !important;display:block">
 	        <div class="video-description-inner">
 	        	<?php if (!empty($item['title'])): ?>
@@ -68,10 +55,13 @@ if ($items_count > 0) {
 								    poster="<?php print $item['media_image_path']; ?>" -->
 							  	<video 
 								    src="<?php print $item['media_video_path']; ?>" 
+								    <?php if (!empty($item['media_image_path'])): ?>
+								    poster="<?php print $item['media_image_path']; ?>"
+								    <?php endif; ?>
 								    height="<?php print $height; ?>" 
 								    width="<?php print $width; ?>"
 								    id="<?php print $media_ident; ?>" 
-								    style="display:<?php print $display; ?>;">
+								    style="display:<?php print $item['display']; ?>;">
 									</video>
 							  	
 		            </div>
@@ -103,42 +93,26 @@ if ($items_count > 0) {
   
   $tab_count = count($items);
   if ($tab_count > 1): 
-  
   ?>
   <div class="video-callout-controls tabs-<?php print $tab_count;?> clearfix">
   	<div class="video-callout-tabs">
-
   <?php foreach ($items as $index => $item) {
-  	
-		$media_ident = 'pf-video-callout-' . basename($item['media_video_path'], '.mp4') . $item['index'];
-  	
-		$additional_classes = '';
-		if ($index == 0):
-			$additional_classes = ' selected first';
-		elseif(($index + 1) == $tab_count):
-			$additional_classes = ' last';
-		endif;
+		$media_ident = pf_jw_embedder_callout_media_ident($item['media_video_path'], 'pf-video-callout-', $item['index']);
 		 ?>
-	    <div class="video-callout-tab tab-<?php print ($index + 1) . $additional_classes; ?>">
+	    <div class="video-callout-tab tab-<?php print ($index + 1) . $item['additional_classes']; ?>">
 	      <a href="#<?php print $media_ident; ?>-screen" >
 	        <span class="h3"><?php print $item['short_title'] ? $item['short_title'] : $item['title']; ?></span>
 	        <span class="h4"><?php print $item['short_description'] ? $item['short_description'] : '&#160;'; ?></span>
 	      </a>
 	    </div>
-
   <?php } ?>
-
   	</div>
-  
 	</div>
   <?php endif;?>
   
 <script type="text/javascript">
-
 	<?php 
-	
-	$first_media_ident = 'pf-video-callout-' . basename($first_item['media_video_path'], '.mp4') . '0';
-	
+	$first_media_ident = pf_jw_embedder_callout_media_ident($first_item['media_video_path'], 'pf-video-callout-', '0');
 	?>
 
 function set_callout_jw_player(vid_id) {
@@ -151,14 +125,21 @@ function set_callout_jw_player(vid_id) {
 		    opacity: 100,
 		  }, 1000);
 	jwplayer(vid_id).setup({
-		  //flashplayer: '<?php print $player; ?>',
-    	//skin: '<?php print $skin_flash; ?>'
-		  backcolor:'<?php print $backcolor; ?>',
-		  modes: [
-		  		{ type: "html5", skin: '<?php print $skin_html5; ?>' },
-		  		{ type: "flash", src: "<?php print $player; ?>", skin: '<?php print $skin_flash; ?>' },
-		      { type: "download" }
-		    ]
+		flashplayer: '<?php print $player; ?>'
+    ,skin: '<?php print $skin_flash; ?>'
+	  ,backcolor:'<?php print $backcolor; ?>'
+		,screencolor: '<?php print $screencolor; ?>'
+		,frontcolor: '<?php print $frontcolor; ?>'
+		,lightcolor: '<?php print $lightcolor; ?>'
+		,'controlbar.position': '<?php print $controlbar_position; ?>'
+		,'controlbar.idlehide': '<?php print $controlbar_idlehide; ?>'
+		,'display.showmute': '<?php print $display_showmute; ?>'
+		,autostart: '<?php print $autostart; ?>'
+	  /*,modes: [
+	  		{ type: "html5", skin: '<?php print $skin_html5; ?>' }
+	  		,{ type: "flash", src: "<?php print $player; ?>", skin: '<?php print $skin_flash; ?>' }
+	      ,{ type: "download" }
+	    ]*/
 		}).play();
 	jQuery('div.tabbed-video-callout>div.interactive-box>div.info>div, #jw-embedder-playlist-player object')
 		.css('background-color', 'rgb(<?php print $backcolor_rgb; ?>)');

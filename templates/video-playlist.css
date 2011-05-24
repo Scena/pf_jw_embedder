@@ -3,45 +3,98 @@
 object {
 	vertical-align:top;
 }
-
-#jw-embedder-playlist-player {
-	/*height:360px;*/
+.jw-embedder-playlist-player {
 	position:relative;
 	overflow:hidden;
 }
-#jw-embedder-playlist-player>div {
+.jw-embedder-playlist-player>div {
 	position:absolute;
 	top:0;
 	left:0;
 }
-/*#jw-embedder-playlist-player object {
-	background:transparent !important;
-}*/
-#jw-embedder-playlist-list {
-	
+
+
+.jw-embedder-current-detail {
+	margin:0;
+	background-color:#5b574b;
+	height:2em;
+	padding:5px 10px;
 }
-#jw-embedder-playlist-list>ul {
+.jw-embedder-current-detail>ul {
 	list-style:none;
+	padding:0;
+	margin:0;
 }
-#jw-embedder-playlist-list>ul>li.jw-embedder-playlist-item {
-	border-bottom:1px solid #666;
+.jw-embedder-current-detail>ul>li {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.jw-embedder-current-detail>ul>li>h2 {
+float:left;
+color:#fff;
+	font-weight:normal;
+	font-size:1.5em !important;
+}
+.jw-embedder-current-detail>ul>li>div.current-detail-controls {
+	float:right;
+}
+.jw-embedder-current-detail>ul>li>div.current-detail-controls a {
+color:#fff;
+text-decoration:none;
+text-transform:uppercase;
+}
+.jw-embedder-current-detail>ul>li>div.current-detail-controls textarea {
+	display:none;
+}
+
+
+.jw-embedder-playlist-list>ul {
+	list-style:none !important;
+}
+.jw-embedder-playlist-list>ul>li.jw-embedder-playlist-item {
+	list-style:none !important;
+	/*border-bottom:1px solid #666;*/
 	padding:20px 0;
 	background:none;
 	float:left;
 	width:48%;
 	padding: 5px;
+	height:110px;
 }
-#jw-embedder-playlist-list>ul>li.jw-embedder-playlist-item.selected {
-	background:#ccc;
-}
-#jw-embedder-playlist-list>ul>li>a {
+.jw-embedder-playlist-list>ul>li a {
 	text-decoration:none;
+	color:#000;
 }
-#jw-embedder-playlist-list>ul>li>a>span.title {
+.jw-embedder-playlist-list>ul>li>a.thumbnail {
+	float:left;
+	/*width:37%;*/
+	overflow:hidden;
+}
+.jw-embedder-playlist-list>ul>li>a.thumbnail>img {
+	border:4px solid transparent;
+}
+.jw-embedder-playlist-list>ul>li.selected>a.thumbnail>img {
+	border:4px solid #f0cb01;
+}
+.jw-embedder-playlist-list>ul>li>div.playlist-item-content {
+	float:right;
+	width:50%;
+	padding:0 5px;
+	line-height:1.1em;
+	font-family:arial, helvetica, sans-serif;
+}
+.jw-embedder-playlist-list>ul>li>div.playlist-item-content>a.title {
 	display:block;
-	font-size:1.1em;
+	font-size:1em;
 	font-weight:bold;
 }
-#jw-embedder-playlist-list>ul>li>a>span.description {
-	display:block;
+.jw-embedder-playlist-list>ul>li>div.playlist-item-content>a.description {
+	/*display:block;*/
+	font-size:.9em;
+	/*line-height:1.1em;*/
+}
+.jw-embedder-playlist-list>ul>li>div.playlist-item-content>a.playlist-item-more {
+	color:#ab1a21;
+	font-weight:bold;
 }
