@@ -117,7 +117,8 @@ if ($items_count > 0) {
       <div style="display:none">
         <div id="<?php print $media_ident; ?>-descr" class="playlist-item-popup">
         	<h4><?php print $item_title; ?></h4>
-        	<?php print $item_description; ?>
+        	<p>Biography</p>
+        	<div class="playlist-item-popup-body"><?php print $item_description; ?></div>
         </div>
       </div>
       <?php endif; ?>
@@ -195,7 +196,6 @@ jQuery(document).ready(function($) {
 	$('.jw-embedder-playlist-item a.playlist-item-more').fancyZoom({
 		directory: '<?php print base_path() . drupal_get_path('theme', 'omega'); ?>/js/fancy-zoom/jquery/images'
 		,width: 500
-		,height: 300
 	});
 	set_playlist_jw_player(CURRENT_PLAYER_ID);
 	
