@@ -211,7 +211,7 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
-	$('.jw-embedder-playlist-item a.playlist-item-more').fancyZoom({
+	$('.jw-embedder-playlist a.playlist-item-more').fancyZoom({
 		directory: '<?php print base_path() . drupal_get_path('theme', 'omega'); ?>/js/fancy-zoom/jquery/images'
 		,width: 500
 	});
