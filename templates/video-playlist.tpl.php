@@ -17,6 +17,10 @@ function pf_jw_embedder_playlist_media_ident($url, $prefix, $suffix) {
 	return $prefix . basename($url, '.' . $path_parts['extension']) . $suffix;
 }
 
+function pf_jw_embedder_more_link($media_ident, $prefix, $suffix) {
+	return ' ' . $prefix . '<a class="playlist-item-more" href="#' . $media_ident . '-descr">Bio</a>' . $suffix;
+}
+
 $items_count = count($items);
 if ($items_count > 0) {
 	
@@ -56,11 +60,12 @@ if ($items_count > 0) {
   <div class="jw-embedder-current-detail">
 		<ul>
   <?php foreach ($items as $index => $item) { 
+		$media_ident = pf_jw_embedder_playlist_media_ident($item['media_video_path'], 'pf-video-playlist-', $item['index']);
+  
+  	$more_popup = pf_jw_embedder_more_link($media_ident, $more_link_prefix, $more_link_suffix);
 		?>
-	    <li style="display:<?php print $item['display']?>" class="jw-embedder-current-detail-item item-<?php print $index . $item['additional_classes']; ?>">
-				<?php if (!empty($item['title'])): ?>
-				<h2><?php print $item['title']; ?></h2>
-				<?php endif; ?>
+	    <li id="<?php print $media_ident; ?>-media-detail" style="display:<?php print $item['display']?>" class="jw-embedder-current-detail-item item-<?php print $index . $item['additional_classes']; ?>">
+				
 		  	<div class="current-detail-controls">
 			  	<div class="current-detail-controls-inner clearfix">
 			  		<a href="#embed">Embed</a>
@@ -71,6 +76,14 @@ if ($items_count > 0) {
 			  			flashvars=\'file=<?php print $item['media_video_path']; ?>&amp;skin=<?php print $skin_flash; ?>&amp;autostart=<?php print $autostart; ?>\'/&gt;</textarea>
 			  	</div>
 		    </div>
+		    <div class="current-detail-content">
+			    <?php if (!empty($item['title'])): ?>
+					<h2><?php print $item['title']; ?></h2>
+					<?php endif; ?>
+			    <?php if (!empty($item['short_description'])): ?>
+					<p><?php print $item['short_description'] . $more_popup; ?></p>
+					<?php endif; ?>
+				</div>
 	    </li>
   <?php } ?>
 		</ul>
@@ -83,21 +96,24 @@ if ($items_count > 0) {
   <div class="jw-embedder-playlist-list" class="clearfix">
 		<ul>
   <?php 
+  
+  
   foreach ($items as $index => $item) { 
 		$media_ident = pf_jw_embedder_playlist_media_ident($item['media_video_path'], 'pf-video-playlist-', $item['index']);
   
   	$item_title = $item['title'] ? $item['title'] : 'No title...';
-  	$item_description = empty($item['description']) ? FALSE : $item['description'];
-  	$create_popup = FALSE;
-  	$more_popup = ' (<a class="playlist-item-more" href="#' . $media_ident . '-descr">Bio</a>)';
-  	if (!empty($item['short_description'])):
-  		$short_item_description = $item['short_description'] . $more_popup;
-  		$create_popup = TRUE;
-  	elseif (strlen($item_description) > 80):
-  		$short_item_description = substr($item_description, 0, 80) . $more_popup;
-  		$create_popup = TRUE;
+  	$item_description = '';
+  	$create_popup = TRUE;
+  	$more_popup = pf_jw_embedder_more_link($media_ident, $more_link_prefix, $more_link_suffix);
+  	if (empty($item['short_description'])):
+  		$item_description = $item['description'];
   	else:
-  		$short_item_description = $item['description'];
+  		$item_description = $item['short_description'];
+  	endif;
+  	if (strlen($item_description) > 80):
+  		$short_item_description = substr($item_description, 0, 80) . '... ' . $more_popup;
+  	else:
+  		$short_item_description = $item['short_description'] . $more_popup;
   	endif;
   	
   	?>
@@ -179,6 +195,7 @@ jQuery(document).ready(function($) {
 		if (CURRENT_PLAYER_ID != self.attr('href')) {
 			jwplayer().stop();
 			jwplayer().remove();
+			$('#' + CURRENT_PLAYER_ID + '-media-detail').fadeOut();
 			$('#' + CURRENT_PLAYER_ID).animate({
 			    opacity: 0
 			  }, 500, function() {
@@ -186,6 +203,7 @@ jQuery(document).ready(function($) {
 					$(this).css({height:0, width:0});
 					self.parents('li').addClass('selected');
 					CURRENT_PLAYER_ID = self.attr('href');
+					$('#' + CURRENT_PLAYER_ID + '-media-detail').fadeIn();
 					set_playlist_jw_player(CURRENT_PLAYER_ID);
 					return false;
 				});

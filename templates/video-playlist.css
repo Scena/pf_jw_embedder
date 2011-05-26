@@ -6,6 +6,7 @@ object {
 .jw-embedder-playlist-player {
 	position:relative;
 	overflow:hidden;
+	height: 338px;
 }
 .jw-embedder-playlist-player>div {
 	position:absolute;
@@ -16,9 +17,9 @@ object {
 
 .jw-embedder-current-detail {
 	margin:0;
-	background-color:#5b574b;
-	height:2em;
-	padding:5px 10px;
+	padding:0;
+	background-color:#fff;
+	height:100px;
 }
 .jw-embedder-current-detail>ul {
 	list-style:none;
@@ -26,26 +27,35 @@ object {
 	margin:0;
 }
 .jw-embedder-current-detail>ul>li {
-	list-style:none;
+	list-style:none !important;
+	list-style-position:inherit;
+  list-style-type:none;
 	padding:0;
 	margin:0;
 }
-.jw-embedder-current-detail>ul>li>h2 {
-float:left;
-color:#fff;
-	font-weight:normal;
-	font-size:1.5em !important;
-}
 .jw-embedder-current-detail>ul>li>div.current-detail-controls {
-	float:right;
+	/*float:right;*/
+	background-color:#000;
+	margin:0;
+	padding:3px;
+	overflow:visible;
 }
 .jw-embedder-current-detail>ul>li>div.current-detail-controls a {
-color:#fff;
-text-decoration:none;
-text-transform:uppercase;
+	color:#fff;
+	float:right;
+	font-size:.8em;
+	line-height:1.2em;
+	text-decoration:none;
+	text-transform:uppercase;
 }
 .jw-embedder-current-detail>ul>li>div.current-detail-controls textarea {
 	display:none;
+}
+.jw-embedder-current-detail>ul>li>div.current-detail-content>h2 {
+	color:#000;
+	font-weight:normal;
+	font-size:1.5em !important;
+	padding-top:10px;
 }
 
 
