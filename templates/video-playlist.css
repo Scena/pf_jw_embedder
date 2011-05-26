@@ -65,12 +65,12 @@ object {
 .jw-embedder-playlist-list>ul>li.jw-embedder-playlist-item {
 	list-style:none !important;
 	/*border-bottom:1px solid #666;*/
-	padding:20px 0;
+	padding:20px 5px;
 	background:none;
 	float:left;
 	width:48%;
-	padding: 5px;
 	height:110px;
+	border-top:1px solid #ccc;
 }
 .jw-embedder-playlist-list>ul>li a {
 	text-decoration:none;
