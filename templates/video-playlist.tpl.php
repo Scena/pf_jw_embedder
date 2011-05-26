@@ -134,7 +134,7 @@ if ($items_count > 0) {
         <div id="<?php print $media_ident; ?>-descr" class="playlist-item-popup">
         	<h4><?php print $item_title; ?></h4>
         	<p>Biography</p>
-        	<div class="playlist-item-popup-body"><?php print $item_description; ?></div>
+        	<div class="playlist-item-popup-body"><?php print $item['description']; ?></div>
         </div>
       </div>
       <?php endif; ?>
