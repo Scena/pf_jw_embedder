@@ -301,7 +301,7 @@ function pf_jw_embedder_field_widget_form(&$form, &$form_state, $field, $instanc
 	    '#description' => t('If left blank, it will be blank.'),
 	    '#default_value' => !empty($items[$delta]['short_description']) ? $items[$delta]['short_description'] : NULL,
 	    '#weight' => 70,
-    	'#size' => 100,
+    	'#size' => 255,
 	    '#required' => FALSE,
 	  );
 	  $element['media_video_bg_path'] = array(
